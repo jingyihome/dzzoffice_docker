@@ -12,8 +12,7 @@ RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime
 # Install dependencies packages
 RUN apt-get update && apt-get -y install php7.2 php7.2-mysql php7.2-curl php7.2-zip php7.2-xml php7.2-gd supervisor git apache2 libapache2-mod-php7.2 mysql-server unzip curl net-tools wget
 
-#Add hosts
-#RUN echo `ifconfig eth0|grep inet|awk '{print $2}'` localhost >> /etc/hosts
+# Stop supervisor
 RUN /etc/init.d/supervisor stop
 
 # Add image config and scripts
@@ -24,8 +23,12 @@ RUN chmod 755 /scripts/*.sh
 ADD conf/supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
 ADD conf/supervisord-mysqld.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
 
-#MySQL conf
+# MySQL conf
 RUN sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/mysql.conf.d/mysqld.cnf
+
+# enable rewrite
+RUN a2enmod rewrite
+RUN sed -i '170,174s/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
 
 # Delete html
 RUN rm -rf /var/www/html/*
