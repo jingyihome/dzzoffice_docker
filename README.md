@@ -8,6 +8,7 @@ Usage:
 
 clone或者download本项目到本地，解压，然后进入解压后的目录中，运行：
     docker build -t dzzoffice .
+  
 此步骤网络不好的时候所需时间稍长，网络好的时候很快就会完成，其中dzzoffice为镜像名称，你可以修改为任意其他名称。
   
 创建了dzzoffcie镜像之后，就可以运行下面的命令来运行 **DzzOffice**
