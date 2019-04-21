@@ -23,6 +23,11 @@ Information:
 
 运行docker container后，可以通过 http://ip 来完成 **DzzOffice** 的安装，Mysql数据的初始账户: admin/admin1234
 
+Changes:
+--------------------------------------------------------------------------
+4.21 修改了创建镜像文件Dockerfile “Download DzzOffice” 板块内容，通过手动下载解决使用wget下载过慢问题，同时原始dzzoffice.zar 存在解压错误问题，此处将文件改为dzzoffice-2.02.tar.gz文件，解决问题。
+
+
 
 系统包含如下环境:
 
@@ -33,3 +38,5 @@ Information:
 ========================================================================
 
 更多关于DzzOffice，请访问 <http://www.dzzoffice.com/> 
+
+
