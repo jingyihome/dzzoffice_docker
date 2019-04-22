@@ -16,4 +16,4 @@ $ bash ./run.sh
 ```
 
 4. 通过浏览器输入 ip:8088 进入安装页面，根据提示完成安装操作。
-
+![image](https://github.com/Springzhen/dzzoffice_docker/blob/master/dzzoffice-docker-images/install.jpg)
