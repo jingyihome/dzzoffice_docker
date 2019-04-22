@@ -1,5 +1,4 @@
 FROM ubuntu:latest
-MAINTAINER jingyihome <jingyihome@163.com>
 
 # Set the locale
 ENV LANG C.UTF-8
@@ -7,10 +6,13 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL C.UTF-8
 
 # Set timezone
-RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime
+RUN ln -sf /usr/share/zoneinfor/Asia/Shanghai  /etc/localtime
 
 # Install dependencies packages
-RUN apt-get update && apt-get -y install php7.2 php7.2-mysql php7.2-curl php7.2-zip php7.2-xml php7.2-gd supervisor git apache2 libapache2-mod-php7.2 mysql-server unzip curl net-tools wget
+
+
+RUN apt-get update && apt-get install -y tzdata && DEBIAN_FRONTEND=noninteractive apt-get -y install php7.2 php7.2-mysql php7.2-curl php7.2-zip php7.2-xml php7.2-gd supervisor git apache2 libapache2-mod-php7.2 mysql-server unzip curl net-tools wget
+#RUN apt-get clean && apt-get update && apt-get -y install php7.2 php7.2-mysql php7.2-curl php7.2-zip php7.2-xml php7.2-gd supervisor git apache2 libapache2-mod-php7.2 mysql-server unzip curl net-tools wget
 
 # Stop supervisor
 RUN /etc/init.d/supervisor stop
@@ -34,13 +36,15 @@ RUN sed -i '170,174s/AllowOverride None/AllowOverride All/g' /etc/apache2/apache
 RUN rm -rf /var/www/html/*
 
 # Download DzzOffice
-RUN wget https://github.com/zyx0814/dzzoffice/archive/2.02.zip -O /tmp/dzzoffice.zip
-RUN unzip /tmp/dzzoffice.zip
+COPY dzzoffice-2.02.tar.gz /tmp/dzzoffice.tar.gz
+#RUN cp -rf dzzoffice-2.02.tar.gz /tmp/dzzoffice.tar.gz
+RUN tar zxvf /tmp/dzzoffice.tar.gz
 
 # Deploy DzzOffice
+#RUN ls /tmp/*
 RUN cp -rf /dzzoffice-2.02/* /var/www/html/
 RUN cp -rf /dzzoffice-2.02/.htaccess /var/www/html/
-RUN rm -rf /tmp/dzzoffice.zip
+RUN rm -rf /dzzoffice.tar.gz
 RUN rm -rf /dzzoffice-2.02/
 
 RUN chown -R www-data:www-data /var/www/html/
